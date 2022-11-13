@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class TestOptions {
         WebDriverManager.chromedriver().setup();
     }
 
-    private final WebDriver driver = new ChromeDriver();
+    private WebDriver driver;
 
     public WebDriver getDriver() {
         return driver;
@@ -32,7 +33,9 @@ public class TestOptions {
 
     @BeforeMethod
     public void beforeMethod() {
+        driver = new ChromeDriver();
         setWindowDimensions(1920, 1080);
+
     }
 
     @AfterMethod
