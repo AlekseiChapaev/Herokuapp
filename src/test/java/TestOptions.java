@@ -3,6 +3,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
@@ -10,6 +11,7 @@ import org.testng.annotations.BeforeTest;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Properties;
 
 import static java.lang.System.getProperties;
@@ -21,6 +23,8 @@ public class TestOptions {
     }
 
     private WebDriver driver;
+
+    private WebDriverWait wait;
 
     public WebDriver getDriver() {
         return driver;
@@ -41,5 +45,9 @@ public class TestOptions {
     @AfterMethod
     public void afterMethod(){
         driver.quit();
+    }
+
+    public WebDriverWait getWait(){
+        return new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }
