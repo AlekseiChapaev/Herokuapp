@@ -1,17 +1,14 @@
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+
 import java.util.List;
 
 public class HerokuappTest extends TestOptions {
-
     private final String URL = "https://formy-project.herokuapp.com/";
     private final List<String> TEST_SCENARIO_NAMES = List.of(
             "Autocomplete",
@@ -26,7 +23,6 @@ public class HerokuappTest extends TestOptions {
             "Modal",
             "Page Scroll",
             "Radio Button",
-
             "Switch Window",
             "Complete Web Form");
 
@@ -102,9 +98,23 @@ public class HerokuappTest extends TestOptions {
     public void testRedirectToTestingScenarioAutocomplete() {
         final String testingScenarioName = "Autocomplete";
 
-        getTestingScenario(testingScenarioName);
+        getTestingScenario("Autocomplete");
         getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div//input")));
 
         Assert.assertEquals(getDriver().findElement(By.xpath("//h1")).getText(), testingScenarioName);
+    }
+
+    @Test
+    public void testAutocompleteInputValues() throws InterruptedException {
+        List<String> inputValues = List.of("Address", "Street address", "Street address 2", "City", "State", "Zip code", "Country");
+        getTestingScenario("Autocomplete");
+
+        List<WebElement> inputFields = getDriver().findElements(By.xpath("//div//input"));
+        for(int i = 0; i < inputFields.size(); i++){
+            getWait().until(ExpectedConditions.elementToBeClickable(inputFields.get(i))).click();
+            inputFields.get(i).sendKeys(inputValues.get(i));
+        }
+
+        System.out.println(inputFields.get(2).getText());
     }
 }
